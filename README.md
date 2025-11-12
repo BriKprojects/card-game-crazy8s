@@ -13,10 +13,10 @@ A tiny end-to-end card table: React handles the player experience, FastAPI keeps
   - WebSocket-driven updates so you always see the latest state without polling.
 
 - **Backend (FastAPI)**  
-  - Game engine (`game.py`) that encapsulates Crazy Eights rules and exposes a clean API.  
+  - Game engine (`game.py`) 
   - REST endpoints for creating/joining/starting games plus play + draw moves.  
   - WebSocket hub that streams each player’s private view (hand + turn info).  
-  - Pytest coverage for the core rule set so regressions surface quickly.
+  - Pytest
 
 - **Database (SQLite via SQLAlchemy)**  
   - `games`, `game_sessions`, and `game_moves` tables for persisting lobbies, players, and history.  
@@ -111,9 +111,9 @@ pytest test_game.py -v
 
 ## Known Gaps & Next Steps
 
-1. **More seats:** The in-memory engine and UI currently cap at 2 players. To support up to 4 you’d extend `CrazyEights.players`, relax the `len(self.players) >= 2` checks, and update layouts to show extra opponents.  
+1. **More seats:** The in-memory engine and UI currently cap at 2 players. To support up to 4 you’d extend `CrazyEights.players`,`len(self.players) >= 2` checks, and update layouts to show extra opponents.  
 2. **Authentication:** Right now “sign in” is just typing a name. Adding password or OAuth-backed sessions would be preferable for a real app.
+3. ***Infrastructure:** Scalable and production-ready infra is missing
+4. ****Visuals:** Self-explanatory, a lot can be improved! Animations, log out-options, tracking of matches etc.
 
 ---
-.  
-
