@@ -1,7 +1,3 @@
-"""
-FastAPI server for Crazy Eights multiplayer card game
-"""
-
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -66,7 +62,7 @@ def db_session():
 
 
 async def broadcast_to_game(game_id: str, event_type: str, event_payload: dict | None = None):
-    """Broadcast a unified message to all players in a game."""
+    
     connections = active_connections.get(game_id)
     if not connections:
         return
@@ -105,7 +101,7 @@ async def broadcast_to_game(game_id: str, event_type: str, event_payload: dict |
 
 
 def _parse_suit(value: str) -> Suit:
-    """Convert user-provided suit string or symbol to Suit enum"""
+    
     if not value:
         raise ValueError("Suit cannot be empty")
 
@@ -118,7 +114,7 @@ def _parse_suit(value: str) -> Suit:
 
 
 def _parse_rank(value: str) -> Rank:
-    """Convert user-provided rank string to Rank enum"""
+    
     if not value:
         raise ValueError("Rank cannot be empty")
 
@@ -180,7 +176,7 @@ def persist_game_state(game_id: str, session=None, **extra_updates) -> None:
 
 
 def load_games_from_db() -> None:
-    """Load previously stored games into memory (rehydration)."""
+    """Load previously stored games into memory"""
     with db_session() as session:
         db_games = session.query(DBGame).all()
         for db_game in db_games:
@@ -219,7 +215,7 @@ async def create_game() -> dict:
 
 @app.post("/games/{game_id}/join")
 async def join_game(game_id: str, request: PlayerJoinRequest) -> dict:
-    """Join an existing game"""
+    
     if game_id not in games:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -279,7 +275,7 @@ async def join_game(game_id: str, request: PlayerJoinRequest) -> dict:
 
 @app.post("/games/{game_id}/start")
 async def start_game(game_id: str) -> dict:
-    """Start the game"""
+    
     if game_id not in games:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -318,7 +314,7 @@ async def start_game(game_id: str) -> dict:
 
 @app.get("/games/{game_id}/state")
 async def get_game_state(game_id: str, player_id: str) -> dict:
-    """Get current game state for a player"""
+    
     if game_id not in games:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -345,7 +341,7 @@ async def get_game_state(game_id: str, player_id: str) -> dict:
 
 @app.post("/games/{game_id}/play")
 async def play_card(game_id: str, player_id: str, request: PlayCardRequest) -> dict:
-    """Play a card"""
+    
     if game_id not in games:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -393,7 +389,7 @@ async def play_card(game_id: str, player_id: str, request: PlayCardRequest) -> d
 
 @app.post("/games/{game_id}/draw")
 async def draw_card(game_id: str, player_id: str) -> dict:
-    """Draw a card"""
+    
     if game_id not in games:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -434,7 +430,7 @@ async def draw_card(game_id: str, player_id: str) -> dict:
     return result
 
 
-# ============= WebSocket =============
+# WebSocket
 
 
 @app.websocket("/ws/{game_id}/{player_id}")
@@ -493,7 +489,7 @@ async def preflight(full_path: str):
 
 @app.get("/health")
 async def health():
-    """Health check endpoint"""
+    
     return {"status": "ok"}
 
 
