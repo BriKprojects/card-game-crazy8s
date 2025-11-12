@@ -23,8 +23,7 @@ A tiny end-to-end card table: React handles the player experience, FastAPI keeps
   - Migrations aren’t wired up yet; recreating the DB is as simple as running `init_db()` (details below).
 
 - **Infrastructure**  
-  - Docker + Compose definitions for a full stack spin-up.  
-  - Local dev workflow with hot reload on both the API (`uvicorn --reload`) and the frontend (`npm run dev`).
+  - Docker Compose  
 
 ---
 
