@@ -1,6 +1,3 @@
-"""
-Crazy Eights card game implementation
-"""
 
 from enum import Enum
 from typing import List, Optional, Dict, Any
@@ -9,7 +6,6 @@ import random
 
 
 class Suit(Enum):
-    """Card suits"""
     HEARTS = "♥"
     DIAMONDS = "♦"
     CLUBS = "♣"
@@ -17,7 +13,6 @@ class Suit(Enum):
 
 
 class Rank(Enum):
-    """Card ranks"""
     ACE = "A"
     TWO = "2"
     THREE = "3"
@@ -35,7 +30,6 @@ class Rank(Enum):
 
 @dataclass
 class Card:
-    """Represents a card"""
     suit: Suit
     rank: Rank
 
@@ -52,7 +46,6 @@ class Card:
 
 
 class GameState(Enum):
-    """Game states"""
     WAITING = "waiting"  # Fewer than 2 players
     READY = "ready"      # Two players joined, waiting to start
     ACTIVE = "active"
@@ -60,8 +53,6 @@ class GameState(Enum):
 
 
 class CrazyEights:
-    """Crazy Eights card game logic"""
-
     HAND_SIZE = 7
     DRAW_PENALTY = 3
 
@@ -290,7 +281,7 @@ class CrazyEights:
         }
 
     def get_game_state(self) -> dict:
-        """Get current game state for broadcasting"""
+
         top_card = self.discard_pile[-1] if self.discard_pile else None
 
         if self.state == GameState.FINISHED or not self.players:
@@ -322,11 +313,11 @@ class CrazyEights:
         }
 
     def get_player_hand(self, player_idx: int) -> List[str]:
-        """Get the cards in a player's hand"""
+        
         return [str(card) for card in self.players[player_idx]["hand"]]
 
     def get_player_state(self, player_idx: int) -> dict:
-        """Get game state from a specific player's perspective"""
+    
         state = self.get_game_state()
         state["your_hand"] = self.get_player_hand(player_idx)
         return state
